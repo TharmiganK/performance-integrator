@@ -27,7 +27,7 @@ Replicas are locked at **min = max = 1** in WSO2 Cloud (scale-to-zero disabled).
 
 ## Prerequisites
 
-1. Shared assets configured — see [`../../../scenarios/passthrough/README.md`](../../../scenarios/passthrough/README.md)
+1. Shared assets configured — see [Passthrough Scenario](../../../scenarios/passthrough/README.md)
 2. EC2 instances running (Netty backend and JMeter client)
 3. `bi-svc` deployed to WSO2 Cloud with replica count fixed at 1 and `nettyUrl` config variable set
 4. The following environment variables set on the JMeter client EC2:
@@ -108,6 +108,6 @@ scripts/
 
 ## References
 
-- Full test methodology: [`docs/performance-testing/passthrough/Proposal.md`](../../docs/performance-testing/passthrough/Proposal.md)
-- Analyzed results: [`reports/performance-testing/passthrough/Report.md`](../../reports/performance-testing/passthrough/Report.md)
-- Shared assets: [`../../../scenarios/passthrough/README.md`](../../../scenarios/passthrough/README.md)
+- Full test methodology: [Performance Testing Proposal - Passthrough](../../docs/performance-testing/passthrough/Proposal.md)
+- Analyzed results: [Performance Testing Report - Passthrough](../../reports/performance-testing/passthrough/Report.md)
+- Shared assets: [Passthrough Scenario](../../../scenarios/passthrough/README.md)

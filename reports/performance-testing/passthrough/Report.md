@@ -98,7 +98,7 @@ This section presents a comprehensive analysis of the performance test results, 
 
 The complete raw test data, including all measured metrics for every configuration, is available in [Appendix 1](#appendix-1---test-results-appendix-1---test-results).
 
-### 1\. Impact of vCPU Scaling on Performance
+### 1. Impact of vCPU Scaling on Performance
 
 This analysis examines the relationship between CPU allocation and system performance by comparing throughput and response times across three vCPU configurations (0.1, 0.5, and 1.0 vCPU) while maintaining constant memory at 1GB. This isolates CPU as the variable to understand its impact on system capacity and responsiveness.  
 
@@ -112,7 +112,7 @@ This analysis examines the relationship between CPU allocation and system perfor
 - At 1000 users, 1.0 vCPU achieves 2537 req/sec vs 1261 req/sec at 0.5 vCPU.  
 - 0.1 vCPU runs at 97-99% CPU usage, while 1.0 vCPU operates at 59-95%.
 
-### 2\. Memory Configuration Impact (512MB vs 1GB at 0.1 vCPU)
+### 2. Memory Configuration Impact (512MB vs 1GB at 0.1 vCPU)
 
 This analysis evaluates the impact of memory allocation on system performance and stability by comparing 512MB and 1GB memory configurations while maintaining minimal CPU allocation (0.1 vCPU). This helps identify whether memory constraints affect performance when CPU resources are limited.
 
@@ -126,7 +126,7 @@ This analysis evaluates the impact of memory allocation on system performance an
 - 1GB shows lower response time variability (lower standard deviation) indicating more stable performance.  
 - At minimal CPU (0.1 vCPU), memory alone doesn't prevent crashes under extreme load (1000 users/1MB).
 
-### 3\. Payload Size Impact on Performance
+### 3. Payload Size Impact on Performance
 
 This analysis demonstrates how system performance characteristics change with increasing message sizes (500B, 10KB, and 1MB) across all tested configurations. This reveals potential bottlenecks related to data transfer and processing rather than computational capacity.
 
@@ -142,7 +142,7 @@ This analysis demonstrates how system performance characteristics change with in
 - 1MB payloads show only 17-52% CPU usage vs 91-99% for small payloads, indicating the bottleneck is not compute resources.  
 - The system is limited by network bandwidth, not CPU or memory, for large payloads - evidenced by high latency despite unsaturated CPU and memory in the WSO2 Cloud component.
 
-### 4\. Concurrency Impact (100 vs 1000 Users)
+### 4. Concurrency Impact (100 vs 1000 Users)
 
 This analysis evaluates each system configuration's ability to scale under increased load by comparing performance metrics between 100 and 1,000 concurrent users—a 10x increase in concurrent sessions. This reveals which configurations can effectively handle production-scale concurrent workloads.
 

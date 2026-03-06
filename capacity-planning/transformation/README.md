@@ -24,8 +24,8 @@ The Ballerina service receives `{ "payload": { ...JSON... } }`, converts the inn
 
 ## Prerequisites
 
-1. Shared assets configured — see [`../../../scenarios/transformation/README.md`](../../../scenarios/transformation/README.md)
-2. Backend built and running — see [`../../../backend/README.md`](../../../backend/README.md)
+1. Shared assets configured — see [Transformation Scenario](../../../scenarios/transformation/README.md)
+2. Backend built and running — see [Backend](../../../backend/README.md)
 3. EC2 instances running (Netty backend and JMeter client)
 4. `bi-svc` deployed to WSO2 Cloud with `nettyUrl` config variable set
 5. The following environment variables set on the JMeter client EC2:
@@ -115,7 +115,7 @@ scripts/
 
 ## References
 
-- Full test methodology: [`docs/capacity-planning/transformation/Proposal.md`](../../docs/capacity-planning/transformation/Proposal.md)
-- Analyzed results: [`reports/capacity-planning/transformation/Report.md`](../../reports/capacity-planning/transformation/Report.md)
-- Shared assets: [`../../../scenarios/transformation/README.md`](../../../scenarios/transformation/README.md)
-- Backend: [`../../../backend/README.md`](../../../backend/README.md)
+- Full test methodology: [Capacity Planning Proposal - Transformation](../../docs/capacity-planning/transformation/Proposal.md)
+- Analyzed results: [Capacity Planning Report - Transformation](../../reports/capacity-planning/transformation/Report.md)
+- Shared assets: [Transformation Scenario](../../../scenarios/transformation/README.md)
+- Backend: [Backend](../../../backend/README.md)

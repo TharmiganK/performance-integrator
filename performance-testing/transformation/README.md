@@ -29,8 +29,8 @@ Replicas are locked at **min = max = 1** in WSO2 Cloud (scale-to-zero disabled).
 
 ## Prerequisites
 
-1. Shared assets configured — see [`../../../scenarios/transformation/README.md`](../../../scenarios/transformation/README.md)
-2. Backend built and running — see [`../../../backend/README.md`](../../../backend/README.md)
+1. Shared assets configured — see [Transformation Scenario](../../../scenarios/transformation/README.md)
+2. Backend built and running — see [Backend](../../../backend/README.md)
 3. EC2 instances running (Netty backend and JMeter client)
 4. `bi-svc` deployed to WSO2 Cloud with replica count fixed at 1 and `nettyUrl` config variable set
 5. The following environment variables set on the JMeter client EC2:
@@ -111,7 +111,7 @@ scripts/
 
 ## References
 
-- Full test methodology: [`docs/performance-testing/transformation/Proposal.md`](../../docs/performance-testing/transformation/Proposal.md)
-- Analyzed results: [`reports/performance-testing/transformation/Report.md`](../../reports/performance-testing/transformation/Report.md)
-- Shared assets: [`../../../scenarios/transformation/README.md`](../../../scenarios/transformation/README.md)
-- Backend: [`../../../backend/README.md`](../../../backend/README.md)
+- Full test methodology: [Performance Testing Proposal - Transformation](../../docs/performance-testing/transformation/Proposal.md)
+- Analyzed results: [Performance Testing Report - Transformation](../../reports/performance-testing/transformation/Report.md)
+- Shared assets: [Transformation Scenario](../../../scenarios/transformation/README.md)
+- Backend: [Backend](../../../backend/README.md)

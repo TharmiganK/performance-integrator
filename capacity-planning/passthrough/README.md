@@ -22,7 +22,7 @@ JMeter (EC2) → WSO2 Cloud NGINX → API Gateway → KEDA → Ballerina Service
 
 ## Prerequisites
 
-1. Shared assets configured — see [`../../../scenarios/passthrough/README.md`](../../../scenarios/passthrough/README.md)
+1. Shared assets configured — see [Passthrough Scenario](../../../scenarios/passthrough/README.md)
 2. EC2 instances running (Netty backend and JMeter client)
 3. `bi-svc` deployed to WSO2 Cloud with `nettyUrl` config variable set
 4. The following environment variables set on the JMeter client EC2:
@@ -112,7 +112,7 @@ scripts/
 
 ## References
 
-- Full test methodology: [`docs/capacity-planning/passthrough/Proposal.md`](../../docs/capacity-planning/passthrough/Proposal.md)
-- Capacity guide: [`docs/capacity-planning/passthrough/CapacityGuide.md`](../../docs/capacity-planning/passthrough/CapacityGuide.md)
-- Analyzed results: [`reports/capacity-planning/passthrough/Report.md`](../../reports/capacity-planning/passthrough/Report.md)
-- Shared assets: [`../../../scenarios/passthrough/README.md`](../../../scenarios/passthrough/README.md)
+- Full test methodology: [Capacity Planning Proposal - Passthrough](../../docs/capacity-planning/passthrough/Proposal.md)
+- Capacity guide: [Capacity Guide - Passthrough](../../docs/capacity-planning/passthrough/CapacityGuide.md)
+- Analyzed results: [Capacity Planning Report - Passthrough](../../reports/capacity-planning/passthrough/Report.md)
+- Shared assets: [Passthrough Scenario](../../../scenarios/passthrough/README.md)

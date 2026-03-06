@@ -8,4 +8,4 @@
 
 Results will be published here after the performance test runs are complete.
 
-See [`../docs/Proposal.md`](../docs/Proposal.md) for the full test methodology.
+See [Performance Testing Proposal - Transformation](../../../docs/performance-testing/transformation/Proposal.md) for the full test methodology.

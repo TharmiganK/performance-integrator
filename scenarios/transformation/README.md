@@ -60,7 +60,7 @@ Refer to the [WSO2 Cloud documentation](https://wso2.com/devant/docs/) for deplo
 
 ## Payload Files
 
-Pre-generated JSON payload files live in [`../../payloads/transformation/`](../../payloads/transformation/). Each file contains a realistic order JSON object with a structured `payload` field. The inner `payload` is a valid JSON object that `xmldata:fromJson` can convert to XML.
+Pre-generated JSON payload files live in [Payloads directory](../../payloads/transformation/). Each file contains a realistic order JSON object with a structured `payload` field. The inner `payload` is a valid JSON object that `xmldata:fromJson` can convert to XML.
 
 **Payload structure:**
 
@@ -92,4 +92,4 @@ Pre-generated JSON payload files live in [`../../payloads/transformation/`](../.
 
 ## backend
 
-The shared Netty HTTP echo server lives at [`../../../backend/`](../../../backend/). Refer to the [backend README](../../../backend/README.md) for build and run instructions.
+The shared Netty HTTP echo server lives at [Backend directory](../../../backend/). Refer to the [Backend documentation](../../../backend/README.md) for build and run instructions.

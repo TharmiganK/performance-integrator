@@ -42,13 +42,13 @@ Refer to the [WSO2 Cloud documentation](https://wso2.com/devant/docs/) for deplo
 
 ## backend
 
-The shared Netty HTTP echo server lives at [`../../../backend/`](../../../backend/). Refer to the [backend README](../../../backend/README.md) for build and run instructions.
+The shared Netty HTTP echo server lives at [Backend directory](../../../backend/). Refer to the [Backend documentation](../../../backend/README.md) for build and run instructions.
 
 ---
 
 ## Payload Files
 
-Pre-generated payload files live in [`../../payloads/passthrough/`](../../payloads/passthrough/). Each file contains a single JSON object with a `message` field padded to the target size.
+Pre-generated payload files live in [Payloads directory](../../payloads/passthrough/). Each file contains a single JSON object with a `message` field padded to the target size.
 
 | File | Size |
 | ------ | ------ |

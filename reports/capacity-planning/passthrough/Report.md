@@ -301,7 +301,7 @@ The following charts visualise latency measurements recorded under conditions wi
 
 ## Detailed Analysis
 
-### 1\. Very Low Throughput Scenarios (50 RPS)
+### 1. Very Low Throughput Scenarios (50 RPS)
 
 **Performance Characteristics:**
 
@@ -316,7 +316,7 @@ The following charts visualise latency measurements recorded under conditions wi
 - **1MB with ≥0.5 CPU**: Single replica sufficient for ≥50 users
 - **Recommended Configuration**: 0.2 CPU / 512MB for payloads ≤250KB; 0.5 CPU / 1GB for 1MB
 
-### 2\. Low Throughput Scenarios (100 RPS)
+### 2. Low Throughput Scenarios (100 RPS)
 
 **Performance Characteristics:**
 
@@ -330,7 +330,7 @@ The following charts visualise latency measurements recorded under conditions wi
 - **1MB Challenge**: Requires 1-4 replicas depending on configuration; 10 users always fails
 - **Recommended Configuration**: 0.5 CPU / 1GB for general use; 1 CPU / 1GB for large payloads
 
-### 3\. Medium Throughput Scenarios (200 RPS)
+### 3. Medium Throughput Scenarios (200 RPS)
 
 **Performance Characteristics:**
 
@@ -344,7 +344,7 @@ The following charts visualise latency measurements recorded under conditions wi
 - **Payload Ceiling**: 1MB payloads not achievable at this throughput level
 - **Resource Efficiency**: Higher CPU configs (≥0.5 CPU) maintain single-replica performance for payloads ≤250KB
 
-### 4\. High Throughput Scenarios (500 RPS)
+### 4. High Throughput Scenarios (500 RPS)
 
 **Performance Characteristics:**
 
@@ -358,7 +358,7 @@ The following charts visualise latency measurements recorded under conditions wi
 - **Scaling Requirements**: 0.2 CPU requires 2-4 replicas; 0.5 CPU requires 1-2 replicas
 - **Optimal Configuration**: 1.0 CPU / 1GB maintains single-replica for achievable scenarios (≤50KB)
 
-### 5\. Very High Throughput Scenarios (1000+ RPS)
+### 5. Very High Throughput Scenarios (1000+ RPS)
 
 **Performance Characteristics:**
 
@@ -395,7 +395,7 @@ The following charts visualise latency measurements recorded under conditions wi
 
 ## Resource Optimization Recommendations
 
-### 1\. Recommended Resource Configurations
+### 1. Recommended Resource Configurations
 
 | Throughput Target | Payload Size | Recommended CPU | Recommended Memory | Expected Replicas | Min Concurrent Users |
 | ----: | ----: | ----: | ----: | ----: | ----: |
@@ -412,7 +412,7 @@ The following charts visualise latency measurements recorded under conditions wi
 | 1000-2000 RPS | 10KB-50KB | 0.5 | 1GB | 1 | 500 |
 | 2000-5000 RPS | 1KB | 0.5 | 1GB | 1 | 500 |
 
-### 2\. Payload Size Guidelines
+### 2. Payload Size Guidelines
 
 | Payload Size | Maximum Recommended Throughput | Notes |
 | ----: | ----: | :---- |
@@ -423,7 +423,7 @@ The following charts visualise latency measurements recorded under conditions wi
 | 250KB | 200 RPS | Limited by latency at higher throughput; ≥0.5 CPU recommended |
 | 1MB | 100 RPS | Limited to ≤100 RPS; requires ≥0.5 CPU and ≥50 users |
 
-### 3\. Concurrency Requirements
+### 3. Concurrency Requirements
 
 Little's Law governs the minimum concurrent users needed:
 
@@ -442,7 +442,7 @@ Based on test results:
 
 ## Cost-Performance Analysis
 
-### 1\. Resource Efficiency Metrics
+### 1. Resource Efficiency Metrics
 
 **Calculation Formula:**
 
@@ -458,7 +458,7 @@ Based on test results:
 | 1.0 CPU / 1GB | 1 | 500 | 500 | Medium |
 | 2.0 CPU / 1GB | 1 | 250 | 500 | Low |
 
-### 2\. Recommended Cost-Optimized Configurations
+### 2. Recommended Cost-Optimized Configurations
 
 1. **Budget-Conscious (Low Throughput)**: 0.2 CPU / 512MB - optimal for ≤100 RPS with small payloads  
 2. **Balanced (Medium Throughput)**: 0.5 CPU / 1GB - best cost-performance ratio for 100-500 RPS  
@@ -469,21 +469,21 @@ Based on test results:
 
 ## Limitations and Constraints
 
-### 1\. Little's Law Constraints
+### 1. Little's Law Constraints
 
 **Issue**: Maximum achievable throughput is limited by concurrent users and latency
 
 - **Impact**: Low concurrency scenarios (10 users) cannot achieve target throughput at higher RPS  
 - **Mitigation**: Ensure sufficient concurrent users based on expected latency
 
-### 2\. Payload Size Limitations
+### 2. Payload Size Limitations
 
 **Issue**: Large payloads (250KB+) significantly increase latency
 
 - **Impact**: 1MB payloads limited to ≤100 RPS; 250KB limited to ≤200 RPS  
 - **Mitigation**: For large payloads, reduce throughput expectations or implement chunking
 
-### 3\. High Throughput Barriers
+### 3. High Throughput Barriers
 
 **Issue**: 2000+ RPS achievable only in limited scenarios with high concurrency
 
@@ -496,26 +496,26 @@ Based on test results:
 
 ## Conclusions and Strategic Recommendations
 
-### 1\. Immediate Actions
+### 1. Immediate Actions
 
 1. **Right-size Resources**: Use 0.5 CPU / 1GB as baseline for most workloads  
 2. **Set Concurrency Expectations**: Ensure clients maintain sufficient concurrent connections  
 3. **Payload Optimization**: Consider compressing large payloads when possible
 
-### 2\. Capacity Planning Guidelines
+### 2. Capacity Planning Guidelines
 
 1. **Small Payloads (≤10KB)**: Use 0.5 CPU / 1GB for up to 500 RPS; scale to 1 CPU for higher  
 2. **Medium Payloads (50-100KB)**: Use 1 CPU / 1GB; expect ≤500 RPS  
 3. **Large Payloads (250KB-1MB)**: Use 1 CPU / 1GB; expect ≤100-200 RPS
 
-### 3\. Future Testing Recommendations
+### 3. Future Testing Recommendations
 
 1. **Latency Profiling**: Detailed latency breakdown (network, processing, backend)  
 2. **Scale-to-Zero Comparison**: Parallel tests with scale-to-zero enabled to measure cold start impact  
 3. **Regional Testing**: Test from different AWS regions to understand network impact  
 4. **Load Balancer Testing**: Multi-replica behavior under load
 
-### 4\. Production Deployment Strategy
+### 4. Production Deployment Strategy
 
 1. **Conservative Start**: Begin with 0.5 CPU / 1GB and monitor  
 2. **Gradual Scaling**: Increase resources based on observed latency and throughput  

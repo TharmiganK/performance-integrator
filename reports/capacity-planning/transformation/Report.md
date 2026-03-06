@@ -8,4 +8,4 @@
 
 Results will be published here after the capacity planning test runs are complete.
 
-See [`../docs/Proposal.md`](../docs/Proposal.md) for the full test methodology.
+See [Capacity Planning Proposal - Transformation](../../../docs/capacity-planning/transformation/Proposal.md) for the full test methodology.
