@@ -1,11 +1,11 @@
-# Capacity Planning Report \- WSO2 WSO2 Cloud PDP
+# Capacity Planning Report - WSO2 Cloud PDP
 
-**Version:** v0.2.1-20260127
-**Date:** 2026-01-27
-**Scenario:** HTTP Passthrough
-**Product:** WSO2 Integrator: BI
-**Product Version:** Ballerina 2202.13.1 (Swan Lake Update 13\)
-**Scale-to-Zero:** Disabled
+**Version:** v0.2.1-20260127 \
+**Date:** 2026-01-27 \
+**Scenario:** HTTP Passthrough \
+**Product:** WSO2 Integrator: BI \
+**Product Version:** Ballerina 2202.13.1 (Swan Lake Update 13) \
+**Scale-to-Zero:** Disabled \
 **Endpoint Authentication:** Enabled
 
 ---
@@ -28,7 +28,7 @@
 
 ## Executive Summary
 
-This capacity planning report presents a comprehensive analysis of the WSO2 WSO2 Cloud Private Data Plane (PDP) performance under various load conditions for an HTTP passthrough scenario. This version includes expanded testing with additional payload sizes (1KB, 10KB, 50KB, 100KB, 250KB, 1MB) and concurrent user counts (10, 50, 100, 200, 500), providing more granular insights into system behavior.
+This capacity planning report presents a comprehensive analysis of the WSO2 Cloud Private Data Plane (PDP) performance under various load conditions for an HTTP passthrough scenario. This version includes expanded testing with additional payload sizes (1KB, 10KB, 50KB, 100KB, 250KB, 1MB) and concurrent user counts (10, 50, 100, 200, 500), providing more granular insights into system behavior.
 
 ### Key Findings
 
@@ -221,7 +221,7 @@ The following charts visualise latency measurements recorded under conditions wi
 
 **Key Observations:**
 
-- **50 users**: All payloads show N/A \- insufficient concurrency to achieve 1000 RPS  
+- **50 users**: All payloads show N/A - insufficient concurrency to achieve 1000 RPS  
 - **100 users**: Only 1KB payloads achievable; requires 3 replicas for 0.2 CPU, single replica for ≥0.5 CPU  
 - **200+ users**: 1KB and 10KB payloads achievable; 0.2 CPU needs 3 replicas, ≥0.5 CPU achieves single replica  
 - 50KB and larger payloads: Not achievable at 1000 RPS due to latency constraints
@@ -235,7 +235,7 @@ The following charts visualise latency measurements recorded under conditions wi
 
 **Key Observations:**
 
-- **10-100 users**: All payloads show N/A \- insufficient concurrency to achieve 2000 RPS  
+- **10-100 users**: All payloads show N/A - insufficient concurrency to achieve 2000 RPS  
 - **200 users**: Only 1KB payloads achievable; requires 3 replicas for 0.2 CPU, single replica for ≥0.5 CPU  
 - **500 users**: 1KB, 10KB, and 50KB payloads achievable; all configurations achieve single replica (except 0.2 CPU for 1KB needs 3 replicas)  
 - 100KB and larger payloads: Not achievable at 2000 RPS due to latency constraints
@@ -249,7 +249,7 @@ The following charts visualise latency measurements recorded under conditions wi
 
 **Key Observations:**
 
-- **10-200 users**: All payloads show N/A \- insufficient concurrency to achieve 5000 RPS  
+- **10-200 users**: All payloads show N/A - insufficient concurrency to achieve 5000 RPS  
 - **500 users**: Only 1KB payload achievable; requires 3 replicas for 0.2 CPU, single replica for ≥0.5 CPU  
 - 10KB and larger payloads: Not achievable at 5000 RPS due to latency constraints  
 - This represents the practical upper limit for this test infrastructure
@@ -264,7 +264,7 @@ The following charts visualise latency measurements recorded under conditions wi
 - **White zones (1 replica)**: Dominate for lower throughput (50-200 RPS) across most payload sizes  
 - **Blue zones (2-4 replicas)**: Appear primarily at higher throughput with larger payloads or low CPU configurations  
 - **N/A zones**: Concentrate at 1000 RPS with payloads ≥50KB, indicating latency limitations  
-- **Configuration efficiency**: 0.5 CPU / 1GB provides the best balance \- achieving single replica for most scenarios where 0.2 CPU requires scaling  
+- **Configuration efficiency**: 0.5 CPU / 1GB provides the best balance - achieving single replica for most scenarios where 0.2 CPU requires scaling  
 - **Payload threshold at 1000 RPS**: Clear boundary where only 1KB and 10KB payloads remain achievable
 
 ---
@@ -460,10 +460,10 @@ Based on test results:
 
 ### 2\. Recommended Cost-Optimized Configurations
 
-1. **Budget-Conscious (Low Throughput)**: 0.2 CPU / 512MB \- optimal for ≤100 RPS with small payloads  
-2. **Balanced (Medium Throughput)**: 0.5 CPU / 1GB \- best cost-performance ratio for 100-500 RPS  
-3. **Performance-Focused (High Throughput)**: 1.0 CPU / 1GB \- optimal for 500+ RPS  
-4. **High-Performance**: 2.0 CPU / 1GB \- minimal additional benefit over 1.0 CPU
+1. **Budget-Conscious (Low Throughput)**: 0.2 CPU / 512MB - optimal for ≤100 RPS with small payloads  
+2. **Balanced (Medium Throughput)**: 0.5 CPU / 1GB - best cost-performance ratio for 100-500 RPS  
+3. **Performance-Focused (High Throughput)**: 1.0 CPU / 1GB - optimal for 500+ RPS  
+4. **High-Performance**: 2.0 CPU / 1GB - minimal additional benefit over 1.0 CPU
 
 ---
 

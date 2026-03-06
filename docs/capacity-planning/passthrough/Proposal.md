@@ -1,4 +1,4 @@
-# Capacity Planning Proposal — WSO2 WSO2 Cloud PDP Passthrough (WSO2 BI)
+# Capacity Planning Proposal — WSO2 Cloud PDP Passthrough (WSO2 BI)
 
 ## Table of Contents
 

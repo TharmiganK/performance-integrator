@@ -1,4 +1,4 @@
-# Performance Testing \- WSO2 Cloud PDP with WSO2 BI
+# Performance Testing - WSO2 Cloud PDP with WSO2 BI
 
 ## Table of Contents
 
@@ -140,7 +140,7 @@ This analysis demonstrates how system performance characteristics change with in
 - Response times increase from 103ms (500B) to 143ms (10KB) to 6397ms (1MB).  
 - All configurations maintain 13-17 req/sec for 1MB payloads, regardless of CPU allocation.  
 - 1MB payloads show only 17-52% CPU usage vs 91-99% for small payloads, indicating the bottleneck is not compute resources.  
-- The system is limited by network bandwidth, not CPU or memory, for large payloads \- evidenced by high latency despite unsaturated CPU and memory in the WSO2 Cloud component.
+- The system is limited by network bandwidth, not CPU or memory, for large payloads - evidenced by high latency despite unsaturated CPU and memory in the WSO2 Cloud component.
 
 ### 4\. Concurrency Impact (100 vs 1000 Users)
 
@@ -202,7 +202,7 @@ Based on the performance testing results, the following recommendations are prop
   - Achieve more accurate representation of distributed user bases  
   - Support testing beyond 1,000 concurrent users if needed
 
-## Appendix 1 \- Test Results {#appendix-1---test-results}
+## Appendix 1 - Test Results {#appendix-1---test-results}
 
 **Note**: `N/A` indicates that the container crashed and restarted multiple times during the test and hence the results are not available.
 

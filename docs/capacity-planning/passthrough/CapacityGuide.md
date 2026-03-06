@@ -1,4 +1,4 @@
-# WSO2 WSO2 Cloud PDP — Capacity Planning Guide
+# WSO2 Cloud PDP — Capacity Planning Guide
 
 **Scenario:** HTTP Passthrough \
 **Product:** WSO2 Integrator: BI \
@@ -21,7 +21,7 @@
 
 ## Overview
 
-This guide helps you select the right resource configuration for your WSO2 WSO2 Cloud Private Data Plane (PDP) deployment. Based on your expected traffic profile — throughput, payload size, and concurrent connections — you can use the tables below to determine the minimum CPU/memory allocation and replica count needed.
+This guide helps you select the right resource configuration for your WSO2 Cloud Private Data Plane (PDP) deployment. Based on your expected traffic profile — throughput, payload size, and concurrent connections — you can use the tables below to determine the minimum CPU/memory allocation and replica count needed.
 
 > **Note:** Results are based on HTTP passthrough testing with scale-to-zero disabled and endpoint authentication enabled. Response times reflect unsaturated service conditions (best-case latency).
 
