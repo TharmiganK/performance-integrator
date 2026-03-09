@@ -59,3 +59,11 @@ nohup.out
 
 # Certificates
 *.pem
+
+# Generated files
+captacity-planning/*/scripts/logs/
+captacity-planning/*/scripts/results/
+captacity-planning/*/scripts/load_test_background.pid
+performance-testing/*/scripts/logs/
+performance-testing/*/scripts/results/
+performance-testing/*/scripts/load_test_background.pid
