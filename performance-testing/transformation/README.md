@@ -7,7 +7,8 @@
 - [Key Difference from Capacity Planning](#key-difference-from-capacity-planning)
 - [Prerequisites](#prerequisites)
 - [Test Execution](#test-execution)
-- [Script Parameters — load_test.sh](#script-parameters--load_testsh)
+- [Script Parameters — single_scenario_test.sh](#script-parameters--single_scenario_testsh)
+- [Script Parameters — interactive_test.sh](#script-parameters--interactive_testsh)
 - [Output](#output)
 - [References](#references)
 
@@ -71,14 +72,34 @@ export BACKEND_IP="<netty-ec2-ip>"
 
 ### 4. Run the test
 
+There are two scripts depending on how you want to run the tests:
+
+**Option A — Single scenario (one `-u`/`-p` combination):**
+
+Runs a per-scenario warmup (120s) followed by a 30s cooldown and then the main load test for the specified user count and payload size.
+
 ```bash
-./scripts/load_test.sh [OPTIONS]
+./scripts/single_scenario_test.sh -u 100 -p 1KB [OPTIONS]
+```
+
+**Option B — Interactive multi-scenario (full matrix):**
+
+Runs the full `-u`/`-p` matrix. Each scenario gets its own warmup (120s) + 30s cooldown before the main test. Between scenarios the script pauses and prompts for a service restart so the service can be reset.
+
+```bash
+./scripts/interactive_test.sh [OPTIONS]
 ```
 
 **Run in background mode (survives SSH disconnection):**
 
 ```bash
-./scripts/load_test.sh --background [OPTIONS]
+./scripts/interactive_test.sh --background [OPTIONS]
+```
+
+**Resume a background run after SSH reconnection:**
+
+```bash
+./scripts/interactive_test.sh --resume
 ```
 
 **Monitor background progress:**
@@ -87,15 +108,27 @@ export BACKEND_IP="<netty-ec2-ip>"
 ./scripts/check_background_progress.sh --follow
 ```
 
-## Script Parameters — load_test.sh
+## Script Parameters — single_scenario_test.sh
+
+| Flag | Default | Description |
+| ------ | --------- | ------------- |
+| `-u, --users` | (required) | Concurrent user count for this run |
+| `-p, --payload` | (required) | Payload size for this run (e.g. `1KB`) |
+| `-d, --duration` | 600 | Test duration in seconds |
+| `--warmup-duration` | 120 | Warmup duration in seconds |
+| `-n, --dry-run` | false | Preview test order without executing |
+| `-h, --help` | — | Show usage |
+
+## Script Parameters — interactive_test.sh
 
 | Flag | Default | Description |
 | ------ | --------- | ------------- |
 | `-u, --users` | 100,200,500,1000 | Comma-separated concurrent user counts |
 | `-p, --payloads` | 1KB,10KB,50KB,100KB | Comma-separated payload sizes |
 | `-d, --duration` | 600 | Test duration per run in seconds |
-| `-c, --cooldown` | 180 | Cooldown period between runs in seconds |
+| `--warmup-duration` | 120 | Warmup duration per scenario in seconds |
 | `-b, --background` | false | Run with nohup (survives SSH disconnect) |
+| `--resume` | false | Resume a background run after reconnection |
 | `-n, --dry-run` | false | Preview test order without executing |
 | `-h, --help` | — | Show usage |
 

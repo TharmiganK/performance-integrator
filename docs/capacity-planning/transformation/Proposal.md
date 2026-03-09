@@ -124,12 +124,16 @@ When per-request latency (including transformation overhead) is high enough that
 
 ### Warmup Phase
 
+Each scenario (combination of target RPS, threads, and payload) gets its own dedicated warmup before the main test run. The service is restarted between scenarios to ensure a clean JVM state.
+
 | Parameter | Value |
 | ----------- | ------- |
-| Duration | 5 minutes (300 s) |
-| Users | 10 |
-| Payload | 1KB.json |
+| Duration | 2 minutes (120 s) |
+| Warmup RPS | 10% of target RPS, minimum 1 |
+| Threads | Same as the main test |
+| Payload | Same as the main test |
 | Purpose | JVM warm-up, connection pool establishment, cache priming |
+| Cooldown after warmup | 30 s before the main test starts |
 
 ### Stress Test Phase
 
@@ -153,9 +157,9 @@ For each `(throughput target, payload size, concurrent users, resource configura
 4. If throughput cannot be sustained, increment replica count and repeat from step 2.
 5. If throughput cannot be achieved at any replica count (due to Little's Law), record **N/A**.
 
-### Cooldown Between Runs
+### Service Restart Between Scenarios
 
-- 2 minutes (120 s) between consecutive runs to allow the replica pool to drain connections and complete GC.
+The service is restarted between scenarios (each unique combination of target RPS, threads, and payload) to ensure a clean JVM state for each measurement. This replaces the previous fixed cooldown between runs.
 
 ### JMeter JVM Tuning
 

@@ -6,7 +6,8 @@
 - [Architecture](#architecture)
 - [Prerequisites](#prerequisites)
 - [Test Execution](#test-execution)
-- [Script Parameters — test.sh](#script-parameters--testsh)
+- [Script Parameters — interactive_test.sh](#script-parameters--interactive_testsh)
+- [Script Parameters — single_scenario_test.sh](#script-parameters--single_scenario_testsh)
 - [Output](#output)
 - [References](#references)
 
@@ -64,22 +65,36 @@ export AUTH_HEADER="Bearer <your-token>"
 export BACKEND_IP="<netty-ec2-ip>"
 ```
 
-### 4. Run the test
+### 4. Run the full matrix test
 
 ```bash
-./scripts/test.sh [OPTIONS]
+./scripts/interactive_test.sh [OPTIONS]
 ```
 
 **Run in background mode (survives SSH disconnection):**
 
 ```bash
-./scripts/test.sh --background [OPTIONS]
+./scripts/interactive_test.sh --background [OPTIONS]
+```
+
+**Resume a background run after a service restart:**
+
+```bash
+./scripts/interactive_test.sh --resume [OPTIONS]
 ```
 
 **Monitor background progress:**
 
 ```bash
 ./scripts/check_background_progress.sh --follow
+```
+
+### 4a. Run a single scenario
+
+To run a single combination of RPS, threads, and payload (includes per-scenario warmup + cooldown):
+
+```bash
+./scripts/single_scenario_test.sh -r <RPS> -t <THREADS> -p <PAYLOAD> [OPTIONS]
 ```
 
 ### 5. (Optional) Validate the backend independently
@@ -90,17 +105,30 @@ Before running the full test, verify end-to-end connectivity to the Netty backen
 ./scripts/test_backend.sh [OPTIONS]
 ```
 
-## Script Parameters — test.sh
+## Script Parameters — interactive_test.sh
 
 | Flag | Default | Description |
 | ------ | --------- | ------------- |
 | `-r, --rps` | 10,50,100,200,500,1000,2000,5000 | Comma-separated target RPS values |
 | `-p, --payloads` | 1KB,10KB,50KB,100KB | Comma-separated payload sizes |
 | `-t, --threads` | 10,50,100,500 | Comma-separated concurrent connection counts |
-| `-d, --duration` | 600 | Test duration per run in seconds |
-| `-c, --cooldown` | 120 | Cooldown period between runs in seconds |
+| `-d, --duration` | 600 | Test duration per scenario in seconds |
+| `--warmup-duration` | 120 | Per-scenario warmup duration in seconds |
 | `-b, --background` | false | Run with nohup (survives SSH disconnect) |
+| `--resume` | false | Resume a paused background run |
 | `-n, --dry-run` | false | Preview test order without executing |
+| `-h, --help` | — | Show usage |
+
+## Script Parameters — single_scenario_test.sh
+
+| Flag | Default | Description |
+| ------ | --------- | ------------- |
+| `-r, --rps` | — | Target RPS for this scenario (required) |
+| `-p, --payload` | — | Payload size for this scenario (required) |
+| `-t, --threads` | — | Concurrent connection count (required) |
+| `-d, --duration` | 600 | Test duration in seconds |
+| `--warmup-duration` | 120 | Warmup duration in seconds (10% of RPS, min 1) |
+| `-n, --dry-run` | false | Preview without executing |
 | `-h, --help` | — | Show usage |
 
 ## Output

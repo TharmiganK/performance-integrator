@@ -96,14 +96,15 @@ Each configuration is tested independently with full parameter sweeps:
 
 ### Warmup Phase
 
-Before each test run:
+Each scenario (combination of users and payload) gets its own dedicated warmup before the main test run. The service is restarted between scenarios to ensure a clean JVM state.
 
 | Parameter | Value |
 | ----------- | ------- |
-| Duration | 5 minutes (300 s) |
-| Users | 10 |
-| Payload | 500 B |
+| Duration | 2 minutes (120 s) |
+| Users | 10% of test users, minimum 10 |
+| Payload | Same as the main test |
 | Purpose | JVM warm-up, connection pool establishment, cache priming |
+| Cooldown after warmup | 30 s before the main test starts |
 
 ### Load Test Phase
 
@@ -116,9 +117,9 @@ Before each test run:
 
 Metrics are collected over the stable-state window (after ramp-up completes).
 
-### Cooldown Between Runs
+### Service Restart Between Scenarios
 
-- 2 minutes (120 s) between runs to allow the replica to drain connections and GC
+The service is restarted between scenarios (each unique combination of users and payload) to ensure a clean JVM state for each measurement. This replaces the previous fixed cooldown between runs.
 
 ### JMeter JVM Tuning
 
