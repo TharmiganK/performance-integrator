@@ -67,3 +67,7 @@ captacity-planning/*/scripts/load_test_background.pid
 performance-testing/*/scripts/logs/
 performance-testing/*/scripts/results/
 performance-testing/*/scripts/load_test_background.pid
+
+# Claude files
+CLAUDE.md
+CONTEXT.md
