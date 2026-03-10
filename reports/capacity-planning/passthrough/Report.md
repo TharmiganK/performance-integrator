@@ -257,7 +257,7 @@ The following charts visualise latency measurements recorded under conditions wi
 
 ### Summary Heatmap
 
-![Summary heatmap: minimum replicas required across all configurations](images/summary_heatmap.png)
+![Summary heatmap: minimum replicas required across all configurations](images/resource_configuration_heatmap.png)
 *Figure 8: Heatmap showing minimum replicas required across all configurations (100 users baseline)*
 
 **Key Observations:**
@@ -272,7 +272,7 @@ The following charts visualise latency measurements recorded under conditions wi
 
 ### Payload Size Impact Analysis
 
-![Payload size impact analysis: minimum replicas required across different throughput levels](images/payload_size_impact.png)
+![Payload size impact analysis: minimum replicas required across different throughput levels](images/payload_impact_analysis.png)
 *Figure 9: Impact of payload size on minimum replica requirements across different throughput levels*
 
 **Key Observations:**
@@ -287,7 +287,7 @@ The following charts visualise latency measurements recorded under conditions wi
 
 ### User Count Impact Analysis
 
-![User count impact analysis: minimum replicas required across different throughput levels](images/user_count_impact.png)
+![User count impact analysis: minimum replicas required across different throughput levels](images/concurrent_users_comparison.png)
 *Figure 10: Impact of concurrent user count on achievability and replica requirements*
 
 **Key Observations:**
