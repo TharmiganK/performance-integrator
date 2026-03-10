@@ -13,24 +13,24 @@
 
 ## Scenario
 
-The **passthrough** scenario sends HTTP requests through the Ballerina integration service to the Netty echo backend without any transformation or business logic. This isolates the pure infrastructure overhead of the WSO2 Cloud PDP and provides a baseline for all capacity planning calculations.
+The **passthrough** scenario sends HTTP requests through the Ballerina integration service to the Netty echo backend without any transformation or business logic. This isolates the pure infrastructure overhead of the WSO2 Integration Platform PDP and provides a baseline for all capacity planning calculations.
 
 ## Architecture
 
 ```txt
-JMeter (EC2) → WSO2 Cloud NGINX → API Gateway → KEDA → Ballerina Service (PDP) → Netty Backend (EC2)
+JMeter (EC2) → WSO2 Integration Platform NGINX → API Gateway → KEDA → Ballerina Service (PDP) → Netty Backend (EC2)
 ```
 
 ## Prerequisites
 
 1. Shared assets configured — see [Passthrough Scenario](../../../scenarios/passthrough/README.md)
 2. EC2 instances running (Netty backend and JMeter client)
-3. `bi-svc` deployed to WSO2 Cloud with `nettyUrl` config variable set
+3. `bi-svc` deployed to WSO2 Integration Platform with `nettyUrl` config variable set
 4. The following environment variables set on the JMeter client EC2:
 
 | Variable | Description | Example |
 | ---------- | ------------- | --------- |
-| `DOMAIN` | WSO2 Cloud service endpoint hostname | `abc123.wso2apis.dev` |
+| `DOMAIN` | WSO2 Integration Platform service endpoint hostname | `abc123.wso2apis.dev` |
 | `AUTH_HEADER` | Authorization header value | `Bearer eyJ...` |
 | `BACKEND_IP` | IP of the EC2 instance running Netty | `10.0.1.50` |
 
@@ -50,14 +50,14 @@ Then start the server:
 java -jar ../../../backend/target/netty-http-echo-service.jar --port 8688
 ```
 
-### 2. Configure the WSO2 Cloud component
+### 2. Configure the WSO2 Integration Platform component
 
-In the WSO2 Cloud console, set the replica CPU/memory limits for the `bi-svc` component and set the `nettyUrl` config variable.
+In the WSO2 Integration Platform console, set the replica CPU/memory limits for the `bi-svc` component and set the `nettyUrl` config variable.
 
 ### 3. Set environment variables on the JMeter EC2
 
 ```bash
-export DOMAIN="<your-wso2-cloud-endpoint-hostname>"
+export DOMAIN="<your-wso2-integration-platform-endpoint-hostname>"
 export AUTH_HEADER="Bearer <your-token>"
 export BACKEND_IP="<netty-ec2-ip>"
 ```
@@ -96,7 +96,7 @@ To run a single combination of RPS, threads, and payload (includes per-scenario 
 
 ### 5. (Optional) Validate the backend independently
 
-Before running the full test, verify end-to-end connectivity through the WSO2 Cloud service:
+Before running the full test, verify end-to-end connectivity through the WSO2 Integration Platform service:
 
 ```bash
 ./scripts/test_backend.sh [OPTIONS]

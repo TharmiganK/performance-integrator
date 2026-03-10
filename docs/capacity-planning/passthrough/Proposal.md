@@ -1,4 +1,4 @@
-# Capacity Planning Proposal — WSO2 Cloud PDP Passthrough (WSO2 BI)
+# Capacity Planning Proposal — WSO2 Integration Platform PDP Passthrough (WSO2 BI)
 
 ## Table of Contents
 
@@ -13,7 +13,7 @@
 
 ## Introduction
 
-This document describes the methodology for **capacity planning** of a WSO2 Integrator (BI) passthrough service deployed on the WSO2 Cloud Private Data Plane (PDP). Building on the single-replica performance baselines established in the [Performance Testing Report](../../../reports/performance-testing/passthrough/Report.md), this study shifts from measuring maximum achievable throughput per replica to determining the **minimum number of replicas** required to sustain a set of predefined throughput targets.
+This document describes the methodology for **capacity planning** of a WSO2 Integrator (BI) passthrough service deployed on the WSO2 Integration Platform Private Data Plane (PDP). Building on the single-replica performance baselines established in the [Performance Testing Report](../../../reports/performance-testing/passthrough/Report.md), this study shifts from measuring maximum achievable throughput per replica to determining the **minimum number of replicas** required to sustain a set of predefined throughput targets.
 
 The performance testing study revealed several critical findings that motivate this expanded capacity planning effort:
 
@@ -59,7 +59,7 @@ This proposal defines the expanded test plan to address those gaps.
 
 The backend instance must be in the **same VPC** as the PDP to minimise network overhead.
 
-### WSO2 Cloud PDP Configuration
+### WSO2 Integration Platform PDP Configuration
 
 | Parameter | Value |
 | ----------- | ------- |

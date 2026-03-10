@@ -1,6 +1,6 @@
 # WSO2 Integrator Performance
 
-Centralized performance testing and capacity planning for WSO2 Integrator running on the WSO2 Cloud Private Data Plane (PDP).
+Centralized performance testing and capacity planning for WSO2 Integrator running on the WSO2 Integration Platform Private Data Plane (PDP).
 
 ## Table of Contents
 
@@ -54,7 +54,7 @@ integrator-performance/
 - **Java 21** — required for JMeter
 - **Ballerina 2201.13.1** (Swan Lake Update 13) — for building the integration service
 - **AWS EC2** — JMeter client instance and Netty backend instance in the same VPC as the PDP
-- **WSO2 Cloud PDP** — a configured Private Data Plane with an active component deployment
+- **WSO2 Integration Platform PDP** — a configured Private Data Plane with an active component deployment
 
 ## Testing Categories
 

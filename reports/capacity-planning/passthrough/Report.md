@@ -1,4 +1,4 @@
-# Capacity Planning Report - WSO2 Cloud PDP
+# Capacity Planning Report - WSO2 Integration Platform PDP
 
 **Version:** v0.2.1-20260127 \
 **Date:** 2026-01-27 \
@@ -28,7 +28,7 @@
 
 ## Executive Summary
 
-This capacity planning report presents a comprehensive analysis of the WSO2 Cloud Private Data Plane (PDP) performance under various load conditions for an HTTP passthrough scenario. This version includes expanded testing with additional payload sizes (1KB, 10KB, 50KB, 100KB, 250KB, 1MB) and concurrent user counts (10, 50, 100, 200, 500), providing more granular insights into system behavior.
+This capacity planning report presents a comprehensive analysis of the WSO2 Integration Platform Private Data Plane (PDP) performance under various load conditions for an HTTP passthrough scenario. This version includes expanded testing with additional payload sizes (1KB, 10KB, 50KB, 100KB, 250KB, 1MB) and concurrent user counts (10, 50, 100, 200, 500), providing more granular insights into system behavior.
 
 ### Key Findings
 
@@ -63,7 +63,7 @@ This capacity planning report presents a comprehensive analysis of the WSO2 Clou
    - CPU utilization is not saturated on the replicas  
    - Memory utilization is not saturated on the replicas  
    - This confirms that **network latency** (not compute resources) is the limiting factor  
-   - The bottleneck lies in the round-trip time between client, WSO2 Cloud PDP, and backend
+   - The bottleneck lies in the round-trip time between client, WSO2 Integration Platform PDP, and backend
 
 ### Key Improvements from v0.1.0
 
@@ -78,7 +78,7 @@ This capacity planning report presents a comprehensive analysis of the WSO2 Clou
 ### Next Steps
 
 1. **Investigate Latency Bottlenecks**: Analyze latency patterns to understand why certain configurations fail  
-2. **Network Optimization**: Evaluate network latency between client, WSO2 Cloud PDP, and backend  
+2. **Network Optimization**: Evaluate network latency between client, WSO2 Integration Platform PDP, and backend  
 3. **Extended Duration Tests**: Conduct long-running tests to identify performance degradation patterns  
 4. **Scale-to-Zero Comparison**: Conduct parallel tests with scale-to-zero enabled to measure cold start impact
 
@@ -99,7 +99,7 @@ This version transitions from a **load testing** methodology to a **stress testi
 ### Test Architecture
 
 - **Client**: JMeter hosted on AWS `m6a.xlarge` (4 vCPU, 16 GiB RAM, up to 12.5 Gbps network bandwidth)  
-- **Service**: WSO2 Integrator: BI passthrough service on WSO2 Cloud PDP  
+- **Service**: WSO2 Integrator: BI passthrough service on WSO2 Integration Platform PDP  
 - **Backend**: Netty backend hosted on AWS `c5.xlarge`  
 - **Configuration**: Scale-to-zero disabled (for consistent baseline measurements)
 
@@ -489,7 +489,7 @@ Based on test results:
 
 - **2000 RPS**: Requires ≥200 users for 1KB; 500 users for 10KB-50KB payloads  
 - **5000 RPS**: Requires 500 users and limited to 1KB payload only  
-- **Root Cause**: Network latency between client and WSO2 Cloud PDP  
+- **Root Cause**: Network latency between client and WSO2 Integration Platform PDP  
 - **Recommendation**: Ensure high concurrent connections; consider regional deployment for lower latency
 
 ---

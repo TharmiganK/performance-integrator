@@ -1,4 +1,4 @@
-# Capacity Planning — WSO2 Cloud PDP
+# Capacity Planning — WSO2 Integration Platform PDP
 
 ## Table of Contents
 
@@ -17,7 +17,7 @@ Determine the **minimum number of replicas** needed to sustain a target RPS unde
 
 ## Why This Matters
 
-Customers deploying on WSO2 Cloud PDP need to know how many replicas to provision for their expected load. Under-provisioning causes latency degradation; over-provisioning wastes cost. These tests answer: *"for this customer tier, how many replicas are required?"*
+Customers deploying on WSO2 Integration Platform PDP need to know how many replicas to provision for their expected load. Under-provisioning causes latency degradation; over-provisioning wastes cost. These tests answer: *"for this customer tier, how many replicas are required?"*
 
 ## Customer Tier Model
 

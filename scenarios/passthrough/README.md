@@ -20,7 +20,7 @@ scenarios/passthrough/
 
 ## bi-svc
 
-A Ballerina HTTP service that forwards every inbound request to the Netty backend unchanged. It introduces no transformation or business logic, isolating the pure infrastructure overhead of the WSO2 Cloud PDP.
+A Ballerina HTTP service that forwards every inbound request to the Netty backend unchanged. It introduces no transformation or business logic, isolating the pure infrastructure overhead of the WSO2 Integration Platform PDP.
 
 **Build:**
 
@@ -29,14 +29,14 @@ cd bi-svc
 bal build
 ```
 
-**Deploy to WSO2 Cloud:**
-Create a WSO2 Cloud component pointing at this directory. After deployment, set the following **WSO2 Cloud config variable**:
+**Deploy to WSO2 Integration Platform:**
+Create a WSO2 Integration Platform component pointing at this directory. After deployment, set the following **WSO2 Integration Platform config variable**:
 
 | Variable | Description | Example |
 | ---------- | ------------- | --------- |
 | `nettyUrl` | Full URL of the Netty echo server | `http://<BACKEND_IP>:8688/service/EchoService` |
 
-Refer to the [WSO2 Cloud documentation](https://wso2.com/devant/docs/) for deploying Ballerina services.
+Refer to the [WSO2 Integration Platform documentation](https://wso2.com/devant/docs/) for deploying Ballerina services.
 
 ---
 

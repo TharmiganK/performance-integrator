@@ -1,4 +1,4 @@
-# Performance Testing - WSO2 Cloud PDP with WSO2 BI
+# Performance Testing - WSO2 Integration Platform PDP with WSO2 BI
 
 ## Table of Contents
 
@@ -17,18 +17,18 @@
 
 ---
 
-This document presents a comprehensive performance analysis of WSO2 BI integration deployed in WSO2 Cloud. The performance testing was conducted using the following integration scenario:
+This document presents a comprehensive performance analysis of WSO2 BI integration deployed in WSO2 Integration Platform. The performance testing was conducted using the following integration scenario:
 
 - **Direct Proxy:** A PassThrough Proxy Service that directly invokes the back-end service without intermediate processing or transformation.
 
-The following system configurations were evaluated for comparative performance analysis in WSO2 Cloud:
+The following system configurations were evaluated for comparative performance analysis in WSO2 Integration Platform:
 
 - **Configuration 1:** 0.1 vCPU, 512 MB Memory  
 - **Configuration 2:** 0.1 vCPU, 1 GB Memory  
 - **Configuration 3:** 0.5 vCPU, 1 GB Memory  
 - **Configuration 4:** 1.0 vCPU, 1 GB Memory
 
-**Note:** During all performance tests, `scale-to-zero` functionality is disabled in WSO2 Cloud, and both minimum and maximum replica counts are set to `1` to ensure consistent baseline measurements.
+**Note:** During all performance tests, `scale-to-zero` functionality is disabled in WSO2 Integration Platform, and both minimum and maximum replica counts are set to `1` to ensure consistent baseline measurements.
 
 ## Test Setup
 
@@ -39,7 +39,7 @@ The performance testing infrastructure consists of two distinct AWS EC2 instance
 
 ![Test Setup Diagram](images/test-setup.png)
 
-The test plan generates HTTP requests from JMeter to the WSO2 BI passthrough service in WSO2 Cloud. The service forwards these requests to the backend Netty echo server, which returns the same payload. The response is then relayed back to the JMeter client through the WSO2 BI service, creating a complete round-trip measurement.
+The test plan generates HTTP requests from JMeter to the WSO2 BI passthrough service in WSO2 Integration Platform. The service forwards these requests to the backend Netty echo server, which returns the same payload. The response is then relayed back to the JMeter client through the WSO2 BI service, creating a complete round-trip measurement.
 
 **Test Parameters:**
 
@@ -50,17 +50,17 @@ The test plan generates HTTP requests from JMeter to the WSO2 BI passthrough ser
 
 Two primary performance indicators were measured for each test:
 
-- **Throughput:** The number of requests successfully processed by the BI service in WSO2 Cloud per second, indicating system capacity  
+- **Throughput:** The number of requests successfully processed by the BI service in WSO2 Integration Platform per second, indicating system capacity  
 - **Response Time:** The end-to-end latency from request initiation to response completion, including average, standard deviation, and 99th percentile measurements
 
 **Resource Utilization Metrics:**
 
-For each system configuration, the following resource metrics were captured from WSO2 Cloud runtime monitoring:
+For each system configuration, the following resource metrics were captured from WSO2 Integration Platform runtime monitoring:
 
 - **Maximum CPU Usage (%):** Peak CPU utilization during the test period  
 - **Maximum Memory Usage (%):** Peak memory consumption during the test period
 
-**Note:** CPU and Memory usage values are obtained from the WSO2 Cloud runtime monitoring section and provide approximate values suitable for comparative analysis. The pod-level monitoring should be consulted for precise resource consumption data.
+**Note:** CPU and Memory usage values are obtained from the WSO2 Integration Platform runtime monitoring section and provide approximate values suitable for comparative analysis. The pod-level monitoring should be consulted for precise resource consumption data.
 
 ## Deployment used for the test
 
@@ -86,11 +86,11 @@ A comprehensive performance testing script was developed to ensure consistent an
 The test flow is as follows:
 
 1. Start the Netty Echo server in the backend EC2 instance  
-2. Configure the container-level settings in WSO2 Cloud for the required vCPU and Memory limits  
-3. Configure the backend service URL and deploy the WSO2 BI passthrough service in WSO2 Cloud  
+2. Configure the container-level settings in WSO2 Integration Platform for the required vCPU and Memory limits  
+3. Configure the backend service URL and deploy the WSO2 BI passthrough service in WSO2 Integration Platform  
 4. Set the passthrough service domain(DOMAIN) and the authorization header(AUTH\_HEADER) as environment variables in the JMeter client EC2 instance  
 5. Run the performance test script  
-6. Observe the memory and CPU usages from the WSO2 Cloud runtime metrics
+6. Observe the memory and CPU usages from the WSO2 Integration Platform runtime metrics
 
 ## Performance Analysis Results
 
@@ -140,7 +140,7 @@ This analysis demonstrates how system performance characteristics change with in
 - Response times increase from 103ms (500B) to 143ms (10KB) to 6397ms (1MB).  
 - All configurations maintain 13-17 req/sec for 1MB payloads, regardless of CPU allocation.  
 - 1MB payloads show only 17-52% CPU usage vs 91-99% for small payloads, indicating the bottleneck is not compute resources.  
-- The system is limited by network bandwidth, not CPU or memory, for large payloads - evidenced by high latency despite unsaturated CPU and memory in the WSO2 Cloud component.
+- The system is limited by network bandwidth, not CPU or memory, for large payloads - evidenced by high latency despite unsaturated CPU and memory in the WSO2 Integration Platform component.
 
 ### 4. Concurrency Impact (100 vs 1000 Users)
 
@@ -158,7 +158,7 @@ This analysis evaluates each system configuration's ability to scale under incre
 
 ## Summary and Key Findings
 
-The comprehensive performance testing of WSO2 BI integration in WSO2 Cloud reveals several critical insights:
+The comprehensive performance testing of WSO2 BI integration in WSO2 Integration Platform reveals several critical insights:
 
 **Optimal Configuration for Production Workloads:**
 
@@ -188,7 +188,7 @@ Based on the performance testing results, the following recommendations are prop
   - 2.0 vCPU with 2GB and 4GB memory (assess higher-tier performance)  
   - These configurations will provide comprehensive insights into vertical scaling characteristics
 
-- **Horizontal Scaling Analysis:** Current tests use a single replica in WSO2 Cloud. Conduct multi-replica testing (2, 4, and 8 replicas) to evaluate horizontal scaling efficiency, and performance characteristics.  
+- **Horizontal Scaling Analysis:** Current tests use a single replica in WSO2 Integration Platform. Conduct multi-replica testing (2, 4, and 8 replicas) to evaluate horizontal scaling efficiency, and performance characteristics.  
 
 - **Realistic Payload Distribution:** The 1MB payload size may not represent typical BI integration patterns. Consider a more realistic payload distribution:  
 

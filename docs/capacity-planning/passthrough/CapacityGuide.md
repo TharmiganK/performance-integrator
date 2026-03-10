@@ -1,4 +1,4 @@
-# WSO2 Cloud PDP — Capacity Planning Guide
+# WSO2 Integration Platform PDP — Capacity Planning Guide
 
 **Scenario:** HTTP Passthrough \
 **Product:** WSO2 Integrator: BI \
@@ -21,7 +21,7 @@
 
 ## Overview
 
-This guide helps you select the right resource configuration for your WSO2 Cloud Private Data Plane (PDP) deployment. Based on your expected traffic profile — throughput, payload size, and concurrent connections — you can use the tables below to determine the minimum CPU/memory allocation and replica count needed.
+This guide helps you select the right resource configuration for your WSO2 Integration Platform Private Data Plane (PDP) deployment. Based on your expected traffic profile — throughput, payload size, and concurrent connections — you can use the tables below to determine the minimum CPU/memory allocation and replica count needed.
 
 > **Note:** Results are based on HTTP passthrough testing with scale-to-zero disabled and endpoint authentication enabled. Response times reflect unsaturated service conditions (best-case latency).
 
@@ -31,7 +31,7 @@ This guide helps you select the right resource configuration for your WSO2 Cloud
 
 1. **Identify your traffic profile**: Estimate your target throughput (requests per second), typical payload size, and number of concurrent connections from your clients.
 2. **Find your configuration**: Look up the matching row in the [Resource Configuration Reference](#resource-configuration-reference) table.
-3. **Apply the recommendation**: Use the suggested CPU, memory, and minimum replica count when deploying your component on WSO2 Cloud PDP.
+3. **Apply the recommendation**: Use the suggested CPU, memory, and minimum replica count when deploying your component on WSO2 Integration Platform PDP.
 
 ---
 
@@ -147,4 +147,4 @@ If your requirements fall outside the supported ranges in this guide, or if you 
 
 ---
 
-*This guide is based on internal performance testing of WSO2 Integrator: BI (Ballerina 2202.13.1) on WSO2 Cloud PDP. Results reflect an HTTP passthrough scenario with a single-region deployment.*
+*This guide is based on internal performance testing of WSO2 Integrator: BI (Ballerina 2202.13.1) on WSO2 Integration Platform PDP. Results reflect an HTTP passthrough scenario with a single-region deployment.*

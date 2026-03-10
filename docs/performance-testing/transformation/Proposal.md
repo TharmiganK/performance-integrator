@@ -1,4 +1,4 @@
-# Performance Testing Proposal — WSO2 Cloud PDP JSON→XML Transformation (WSO2 BI)
+# Performance Testing Proposal — WSO2 Integration Platform PDP JSON→XML Transformation (WSO2 BI)
 
 ## Table of Contents
 
@@ -13,7 +13,7 @@
 
 ## Introduction
 
-This document describes the methodology for measuring the **maximum achievable throughput** of a WSO2 Ballerina Integration (BI) JSON→XML transformation service deployed as a single replica on the WSO2 Cloud Private Data Plane (PDP). The service receives a JSON request body containing a `payload` field, converts the inner JSON to XML using `xmldata:fromJson`, and forwards the result to a Netty echo backend.
+This document describes the methodology for measuring the **maximum achievable throughput** of a WSO2 Ballerina Integration (BI) JSON→XML transformation service deployed as a single replica on the WSO2 Integration Platform Private Data Plane (PDP). The service receives a JSON request body containing a `payload` field, converts the inner JSON to XML using `xmldata:fromJson`, and forwards the result to a Netty echo backend.
 
 Results establish per-replica performance ceilings across a range of CPU/memory configurations and provide baseline data for the transformation capacity planning model.
 
@@ -51,7 +51,7 @@ Results establish per-replica performance ceilings across a range of CPU/memory 
 
 The backend instance must be in the **same VPC** as the PDP to minimise network overhead.
 
-### WSO2 Cloud PDP Configuration
+### WSO2 Integration Platform PDP Configuration
 
 | Parameter | Value |
 | ----------- | ------- |

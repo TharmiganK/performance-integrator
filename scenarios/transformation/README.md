@@ -32,7 +32,7 @@ A Ballerina HTTP service that accepts a JSON request body with a `payload` field
 **Flow:**
 
 ```txt
-JMeter → WSO2 Cloud NGINX → API Gateway → Ballerina bi-svc (PDP) → Netty Echo Backend (EC2)
+JMeter → WSO2 Integration Platform NGINX → API Gateway → Ballerina bi-svc (PDP) → Netty Echo Backend (EC2)
 ```
 
 The service extracts `data.payload`, calls `xmldata:fromJson(payload)` to produce XML, then forwards the XML to the Netty backend via HTTP POST to `/service/EchoService`.
@@ -44,15 +44,15 @@ cd bi-svc
 bal build
 ```
 
-**Deploy to WSO2 Cloud:**
+**Deploy to WSO2 Integration Platform:**
 
-Create a WSO2 Cloud component pointing at this directory. After deployment, set the following **WSO2 Cloud config variable**:
+Create a WSO2 Integration Platform component pointing at this directory. After deployment, set the following **WSO2 Integration Platform config variable**:
 
 | Variable | Description | Example |
 | ---------- | ------------- | --------- |
 | `nettyUrl` | Full URL of the Netty echo server | `http://<BACKEND_IP>:8688/service/EchoService` |
 
-Refer to the [WSO2 Cloud documentation](https://wso2.com/devant/docs/) for deploying Ballerina services.
+Refer to the [WSO2 Integration Platform documentation](https://wso2.com/devant/docs/) for deploying Ballerina services.
 
 **Service path:** `/jsonToXml` (POST to `https://<domain>/perf-test-jmeter/bi-transformation/v1.0`)
 

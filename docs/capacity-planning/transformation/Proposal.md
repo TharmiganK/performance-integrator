@@ -1,4 +1,4 @@
-# Capacity Planning Proposal — WSO2 Cloud PDP JSON→XML Transformation (WSO2 BI)
+# Capacity Planning Proposal — WSO2 Integration Platform PDP JSON→XML Transformation (WSO2 BI)
 
 ## Table of Contents
 
@@ -13,7 +13,7 @@
 
 ## Introduction
 
-This document describes the methodology for **capacity planning** of a WSO2 Integrator (BI) JSON→XML transformation service deployed on the WSO2 Cloud Private Data Plane (PDP). Building on the single-replica performance baselines established in the [Performance Testing Report](../../../reports/performance-testing/transformation/Report.md), this study determines the **minimum number of replicas** required to sustain a set of predefined throughput targets for a workload that includes JSON parsing, XML serialization, and backend forwarding.
+This document describes the methodology for **capacity planning** of a WSO2 Integrator (BI) JSON→XML transformation service deployed on the WSO2 Integration Platform Private Data Plane (PDP). Building on the single-replica performance baselines established in the [Performance Testing Report](../../../reports/performance-testing/transformation/Report.md), this study determines the **minimum number of replicas** required to sustain a set of predefined throughput targets for a workload that includes JSON parsing, XML serialization, and backend forwarding.
 
 Unlike the passthrough scenario, the transformation scenario introduces CPU-bound processing (JSON→XML conversion via `xmldata:fromJson`) on every request. This is expected to reduce the per-replica throughput ceiling and shift the CPU saturation point relative to the passthrough baseline.
 
@@ -49,7 +49,7 @@ Unlike the passthrough scenario, the transformation scenario introduces CPU-boun
 
 The backend instance must be in the **same VPC** as the PDP to minimise network overhead.
 
-### WSO2 Cloud PDP Configuration
+### WSO2 Integration Platform PDP Configuration
 
 | Parameter | Value |
 | ----------- | ------- |

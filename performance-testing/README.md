@@ -1,4 +1,4 @@
-# Performance Testing — WSO2 Cloud PDP
+# Performance Testing — WSO2 Integration Platform PDP
 
 ## Table of Contents
 

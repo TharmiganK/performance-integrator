@@ -1,4 +1,4 @@
-# Performance Testing Proposal — WSO2 Cloud PDP Passthrough (WSO2 BI)
+# Performance Testing Proposal — WSO2 Integration Platform PDP Passthrough (WSO2 BI)
 
 ## Table of Contents
 
@@ -13,7 +13,7 @@
 
 ## Introduction
 
-This document describes the methodology for measuring the **maximum achievable throughput** of a WSO2 Ballerina Integration (BI) passthrough service deployed as a single replica on the WSO2 Cloud Private Data Plane (PDP). Results establish per-replica performance ceilings across a range of CPU/memory configurations and provide baseline data for the capacity planning model.
+This document describes the methodology for measuring the **maximum achievable throughput** of a WSO2 Ballerina Integration (BI) passthrough service deployed as a single replica on the WSO2 Integration Platform Private Data Plane (PDP). Results establish per-replica performance ceilings across a range of CPU/memory configurations and provide baseline data for the capacity planning model.
 
 ## Objectives
 
@@ -48,7 +48,7 @@ This document describes the methodology for measuring the **maximum achievable t
 
 The backend instance must be in the **same VPC** as the PDP to minimise network overhead.
 
-### WSO2 Cloud PDP Configuration
+### WSO2 Integration Platform PDP Configuration
 
 | Parameter | Value |
 | ----------- | ------- |
