@@ -119,10 +119,10 @@ Tests target fixed constant throughput levels (stress testing, not open-loop):
 Not all combinations of throughput × concurrency × payload are valid. The AWS instance's maximum network bandwidth imposes the constraint:
 
 ```equation
-request_rate (RPS) × payload_size (bytes) < 10 Gbps
+request_rate (RPS) × payload_size (bytes) × 8 < 10 Gbps
 ```
 
-`payload_size` is in bytes (e.g., 1 KB = 1 024 B). Protocol overhead (HTTP/1.1 headers, ~200–500 B per request) should be added as a margin. Concurrent user count does not appear in the bandwidth formula — bandwidth is determined by the aggregate data rate (RPS × payload), not the parallelism level.
+`payload_size` is in bytes (e.g., 1 KB = 1 024 B); × 8 converts bytes to bits. Protocol overhead (HTTP/1.1 headers, ~200–500 B per request) should be added as a margin. Concurrent user count does not appear in the bandwidth formula — bandwidth is determined by the aggregate data rate (RPS × payload), not the parallelism level.
 
 Combinations exceeding this limit are excluded from the matrix.
 
@@ -143,7 +143,7 @@ Unlike the previous performance testing study, which used open-loop load testing
 A result is recorded as **N/A** when the target throughput cannot be achieved regardless of replica count. This occurs due to **Little's Law**:
 
 ```equation
-Average Effective Throughput = Concurrent Users / Average Latency
+Average Effective Throughput (RPS) = Concurrent Users × 1000 / Average Latency (ms)
 ```
 
 When per-request latency is high enough that the number of concurrent users is insufficient to generate the target RPS, no amount of horizontal scaling resolves the constraint. N/A results are latency-driven (client-side) rather than server-side resource limits.

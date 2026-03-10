@@ -45,7 +45,7 @@ Results establish per-replica performance ceilings across a range of CPU/memory 
 | ----------- | ------- |
 | Server | Netty HTTP echo service |
 | Port | 8688 |
-| Instance type | t2.large or larger |
+| Instance type | c5.large or larger (non-burstable, fixed-performance) |
 | Endpoint | `http://<BACKEND_IP>:8688/service/EchoService` |
 | Behavior | Returns request body verbatim |
 
@@ -143,11 +143,18 @@ export JVM_ARGS="-Xms4g -Xmx8g -XX:MaxMetaspaceSize=512m -Xss256k -XX:+UseG1GC -
 | Metric | Threshold |
 | ----------- | ----------- |
 | Error rate | < 1% |
+| Backend error rate | < 1% — run invalid if exceeded |
 | Throughput | Record achieved RPS at stable state |
-| CPU utilisation | Record % at peak load |
-| Memory utilisation | Record % at peak load |
+| CPU utilisation (replica) | Record % at peak load |
+| Memory utilisation (replica) | Record % at peak load |
+| JMeter CPU | < 80% — run invalid if exceeded |
+| JMeter network | < 75% of NIC capacity — run invalid if exceeded |
+| Backend CPU headroom | > 20% idle — run invalid if exceeded |
+| Backend network | < 75% of NIC capacity — run invalid if exceeded |
 
 There is no minimum RPS threshold — the goal is to record the ceiling, not pass/fail against a target.
+
+If any auxiliary host threshold (JMeter or backend) is exceeded the measured `throughput_rps` is considered invalid and the run must be repeated with a less loaded or larger auxiliary host.
 
 ## Metrics to Capture
 
@@ -165,6 +172,11 @@ Each test run produces one row in the results matrix:
 | `error_pct` | Error rate as a percentage |
 | `cpu_pct` | Peak CPU utilisation of the replica |
 | `mem_pct` | Peak memory utilisation of the replica |
+| `backend_cpu_pct` | Peak CPU utilisation of the backend host |
+| `backend_mem_pct` | Peak memory utilisation of the backend host |
+| `backend_net_mbps` | Peak network throughput of the backend host (Mbps) |
+| `loadgen_cpu_pct` | Peak CPU utilisation of the JMeter host |
+| `loadgen_net_mbps` | Peak network throughput of the JMeter host (Mbps) |
 
 ## Deliverables
 

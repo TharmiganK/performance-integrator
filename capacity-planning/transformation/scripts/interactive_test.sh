@@ -27,6 +27,7 @@ LOG_DIR="$SCRIPT_DIR/logs/${TIMESTAMP}"
 RESULTS_DIR="$SCRIPT_DIR/results/${TIMESTAMP}"
 
 STATE_FILE="${SCRIPT_DIR}/.interactive_state"
+OWNER_FILE="${STATE_FILE}.owner"
 
 # ── Defaults ──────────────────────────────────────────────────────────────────
 DEFAULT_DURATION=600
@@ -227,16 +228,22 @@ run_jmeter_test() {
     print_info "Live JMeter output:"
     echo -e "${YELLOW}===========================================${NC}"
 
+    local props_file
+    props_file=$(mktemp)
+    chmod 600 "$props_file"
+    printf 'authHeader=%s\n' "${AUTH_HEADER}" > "$props_file"
+
     run_with_tee "$log_file" "$JMETER_PATH" -n -t "$TEST_PLAN" \
         -JtargetRPS="$rps" \
         -Jthreads="$threads" \
         -Jduration="$duration" \
         -Jpayload="$PAYLOADS_DIR/$payload_file" \
         -Jdomain="${DOMAIN}" \
-        -JauthHeader="${AUTH_HEADER}" \
+        -q "$props_file" \
         -l "$jtl_file" \
         "${JMETER_SAVE_FLAGS[@]}"
     local exit_code=$?
+    rm -f "$props_file"
 
     echo -e "${YELLOW}===========================================${NC}"
 
@@ -274,7 +281,11 @@ read_state_field() {
 # ── Cleanup on exit ───────────────────────────────────────────────────────────
 cleanup() {
     [[ -p "$RESUME_PIPE" ]] && rm -f "$RESUME_PIPE"
-    rm -f "$STATE_FILE"
+    local owner_pid
+    owner_pid=$(cat "$OWNER_FILE" 2>/dev/null)
+    if [[ "$owner_pid" == "$$" ]]; then
+        rm -f "$STATE_FILE" "$OWNER_FILE"
+    fi
 }
 
 # ── Resume: send signal to a waiting background process ──────────────────────
@@ -294,8 +305,18 @@ handle_resume() {
 
     if ! ps -p "$pid" > /dev/null 2>&1; then
         print_error "Background process (PID: $pid) is no longer running."
-        rm -f "$STATE_FILE"
+        rm -f "$STATE_FILE" "$OWNER_FILE"
         exit 1
+    fi
+
+    # Verify the owner file matches the state file's PID before resuming
+    if [[ -f "$OWNER_FILE" ]]; then
+        local owner_pid
+        owner_pid=$(cat "$OWNER_FILE" 2>/dev/null)
+        if [[ -n "$owner_pid" && "$owner_pid" != "$pid" ]]; then
+            print_error "State file is owned by a different process (owner: $owner_pid, state PID: $pid)."
+            exit 1
+        fi
     fi
 
     if [[ "$phase" != "waiting" ]]; then
@@ -357,6 +378,19 @@ handle_background_mode() {
         local BACKGROUND_LOG="${SCRIPT_DIR}/interactive_test_background_${TIMESTAMP}.log"
 
         if [ -z "$INTERACTIVE_TEST_BACKGROUND" ]; then
+            # Refuse to start if a live background run already owns the state file
+            if [[ -f "$OWNER_FILE" ]]; then
+                local existing_pid
+                existing_pid=$(cat "$OWNER_FILE" 2>/dev/null)
+                if [[ -n "$existing_pid" ]] && ps -p "$existing_pid" > /dev/null 2>&1; then
+                    print_error "An interactive test is already running in the background (PID: $existing_pid)."
+                    print_info "Use --resume to resume it, or kill $existing_pid to stop it."
+                    exit 1
+                else
+                    rm -f "$OWNER_FILE" "$STATE_FILE"
+                fi
+            fi
+
             print_info "Starting interactive test in background mode..."
             print_info "Output will be logged to: $BACKGROUND_LOG"
             print_info "Monitor progress with: tail -f $BACKGROUND_LOG"
@@ -375,6 +409,8 @@ handle_background_mode() {
             exit 0
         fi
 
+        # Record this process as the owner so concurrent launches are rejected
+        echo "$$" > "$OWNER_FILE"
         print_info "Running in background mode (PID: $$)"
         print_info "Output is being logged."
     fi
@@ -511,7 +547,11 @@ done
 } >> "$SUMMARY_FILE"
 
 print_header "ALL SCENARIOS COMPLETED"
-print_success "All interactive scenarios completed!"
+if [[ "$TEST_FAILED" -eq 0 ]]; then
+    print_success "All interactive scenarios completed!"
+else
+    print_error "One or more load tests failed. Check the summary for details."
+fi
 print_info "Summary: $SUMMARY_FILE"
 print_info "Results: $RESULTS_DIR"
 

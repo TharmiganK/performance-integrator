@@ -26,7 +26,7 @@ TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 LOG_DIR="$SCRIPT_DIR/logs/${TIMESTAMP}"
 RESULTS_DIR="$SCRIPT_DIR/results/${TIMESTAMP}"
 
-STATE_FILE="${SCRIPT_DIR}/.interactive_state"
+STATE_FILE="${SCRIPT_DIR}/.interactive_state.$$"
 
 # ── Defaults ──────────────────────────────────────────────────────────────────
 DEFAULT_DURATION=600
@@ -228,7 +228,10 @@ run_jmeter_test() {
 
     if [ $exit_code -eq 0 ]; then
         print_success "Test completed successfully"
-        generate_summary_report "$jtl_file" "$users" "$payload" "$test_type" "$summary_file"
+        if ! generate_summary_report "$jtl_file" "$users" "$payload" "$test_type" "$summary_file"; then
+            print_error "Failed to generate summary report for $jtl_file"
+            exit_code=1
+        fi
     else
         print_error "Test failed with exit code: $exit_code"
     fi
@@ -259,12 +262,28 @@ read_state_field() {
 # ── Cleanup on exit ───────────────────────────────────────────────────────────
 cleanup() {
     [[ -p "$RESUME_PIPE" ]] && rm -f "$RESUME_PIPE"
-    rm -f "$STATE_FILE"
+    if [[ -f "$STATE_FILE" ]]; then
+        local file_pid
+        file_pid=$(grep "^PID=" "$STATE_FILE" | cut -d'=' -f2-)
+        [[ "$file_pid" == "$$" ]] && rm -f "$STATE_FILE"
+    fi
 }
 
 # ── Resume: send signal to a waiting background process ──────────────────────
 handle_resume() {
-    if [[ ! -f "$STATE_FILE" ]]; then
+    # Locate the per-run state file for a live background process
+    local found_state=""
+    for f in "${SCRIPT_DIR}"/.interactive_state.[0-9]*; do
+        [[ -f "$f" ]] || continue
+        local candidate_pid
+        candidate_pid=$(grep "^PID=" "$f" | cut -d'=' -f2-)
+        if [[ -n "$candidate_pid" ]] && ps -p "$candidate_pid" > /dev/null 2>&1; then
+            found_state="$f"
+            STATE_FILE="$f"
+            break
+        fi
+    done
+    if [[ -z "$found_state" ]]; then
         print_error "No active interactive test state found."
         print_info "Is a background interactive test currently running and waiting?"
         exit 1

@@ -87,7 +87,11 @@ Each configuration is tested independently with full parameter sweeps:
 ### Concurrent Users
 
 - 100 users
+- 200 users
+- 500 users
 - 1000 users
+
+Throughput is measured at each step and the ramp stops when throughput flattens or degrades, identifying the saturation knee for each config/payload combination.
 
 ### Replica Configuration
 
@@ -174,7 +178,7 @@ Each test run produces one row in the results matrix:
 | `backend_cpu_pct` | Peak CPU utilisation of the Netty backend host |
 | `backend_mem_pct` | Peak memory utilisation of the Netty backend host |
 | `backend_net_mbps` | Peak network throughput of the Netty backend host (Mbps) |
-| `backend_gc_ms` | N/A (Netty backend has no JVM GC; record `—`) |
+| `backend_gc_ms` | Cumulative GC pause time per minute on the Netty backend host (ms) |
 
 ## Deliverables
 
