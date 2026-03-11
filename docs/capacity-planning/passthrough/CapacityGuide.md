@@ -39,9 +39,17 @@ This guide helps you select the right resource configuration for your WSO2 Integ
 
 ![Test Setup Diagram](images/test_setup.png)
 
-JMeter sends a constant stream of HTTP POST requests to the WSO2 Integrator passthrough service, which forwards each request unmodified to the Netty echo backend. The backend returns the request body as it is. KEDA/HPA scales the number of WSO2 Integrator replicas up or down to meet the target throughput. The minimum replica count needed to sustain each throughput target is the key output of every test run.
+### Performance Test Architecture and Methodology
 
-**Per replica resource configuration tested:**
+**JMeter** generates a constant stream of HTTP POST requests directed at the **WSO2 Integrator Passthrough Service**. The Integrator forwards these requests unmodified to a **Netty echo backend**, which returns the original request body.
+
+To manage varying traffic loads, **KEDA/HPA** dynamically scales the WSO2 Integrator replicas. The primary metric for each test run is the **minimum replica count** required to sustain a specific throughput target without performance degradation.
+
+### Infrastructure Deployment
+
+The test environment is distributed across a hybrid-cloud setup: the **JMeter client** and **Netty echo backend** are deployed on **AWS EC2 instances**, while the **WSO2 Integrator Passthrough Service** resides within a **Private Data Plane (PDP)** on **Azure**.
+
+### Per replica resource configuration tested
 
 | vCPU | Memory |
 | :---: | :---: |
