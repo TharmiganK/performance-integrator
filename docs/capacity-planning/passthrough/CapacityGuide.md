@@ -31,7 +31,32 @@ This guide helps you select the right resource configuration for your WSO2 Integ
 
 1. **Identify your traffic profile**: Estimate your target throughput (requests per second), typical payload size, and number of concurrent connections from your clients.
 2. **Find your configuration**: Look up the matching row in the [Resource Configuration Reference](#resource-configuration-reference) table.
-3. **Apply the recommendation**: Use the suggested CPU, memory, and minimum replica count when deploying your component on WSO2 Integration Platform PDP.
+3. **Apply the recommendation**: Use the suggested CPU, memory, and minimum replica count when deploying your component on Integration Platform PDP.
+
+---
+
+## Test Setup
+
+![Test Setup Diagram](images/test_setup.png)
+
+### Performance Test Architecture and Methodology
+
+**JMeter** generates a constant stream of HTTP POST requests directed at the **WSO2 Integrator Passthrough Service**. The Integrator forwards these requests unmodified to a **Netty echo backend**, which returns the original request body.
+
+To manage varying traffic loads, **KEDA/HPA** dynamically scales the WSO2 Integrator replicas. The primary metric for each test run is the **minimum replica count** required to sustain a specific throughput target without performance degradation.
+
+### Infrastructure Deployment
+
+The test environment is distributed across a hybrid-cloud setup: the **JMeter client** and **Netty echo backend** are deployed on **AWS EC2 instances**, while the **WSO2 Integrator Passthrough Service** resides within a **Private Data Plane (PDP)** on **Azure**.
+
+### Per replica resource configuration tested
+
+| vCPU | Memory |
+| :---: | :---: |
+| 0.2 | 512 MB |
+| 0.5 | 1 GB |
+| 1.0 | 1 GB |
+| 2.0 | 1 GB |
 
 ---
 
@@ -39,16 +64,14 @@ This guide helps you select the right resource configuration for your WSO2 Integ
 
 Use this table to understand the upper throughput limit for each payload size, assuming adequate concurrent connections.
 
-| Payload Size | Max Supported Throughput | Minimum Concurrent Connections Required |
-| :----------- | :----------------------- | :-------------------------------------- |
-| 1 KB         | 5000 RPS                 | 500                                     |
-| 10 KB        | 2000 RPS                 | 500                                     |
-| 50 KB        | 2000 RPS                 | 500                                     |
-| 100 KB       | 500 RPS                  | 100                                     |
-| 250 KB       | 200 RPS                  | 50                                      |
-| 1 MB         | 100 RPS                  | 50                                      |
-
-> **Why do concurrent connections matter?** The achievable throughput depends on the number of concurrent connections your clients maintain. Too few connections create a bottleneck regardless of how many replicas are running since each request must wait for the previous one to complete.
+| Payload Size | Max Supported Throughput |
+| :---: | :---: |
+| 1 KB | 5000 RPS |
+| 10 KB | 2000 RPS |
+| 50 KB | 2000 RPS |
+| 100 KB | 500 RPS |
+| 250 KB | 200 RPS |
+| 1 MB | 100 RPS |
 
 ![Maximum Achievable Throughput by Payload Size](images/max_throughput.png)
 
@@ -56,7 +79,7 @@ Use this table to understand the upper throughput limit for each payload size, a
 
 ## Expected Response Times
 
-The following table shows typical response times under normal operating conditions (no CPU/memory saturation). Use these to set latency expectations and configure client timeouts appropriately.
+The following table shows typical response times under normal operating conditions (no CPU/memory saturation - 1 vCPU and 1GB memory). Use these to set latency expectations and configure client timeouts appropriately.
 
 | Payload Size | Avg Response Time | 99th Percentile |
 | :----------- | :---------------- | :-------------- |
@@ -82,26 +105,27 @@ Use the heatmap below to quickly identify the required resource configuration, t
 Select the row that best matches your target throughput and payload size. All configurations assume adequate concurrent connections (see the [Concurrent Connections Guide](#concurrent-connections-guide) below).
 
 | Target Throughput | Payload Size | Recommended CPU | Recommended Memory | Expected Replicas |
-| :---------------- | :----------- | :-------------- | :----------------- | :---------------- |
-| Up to 50 RPS      | Up to 250 KB | 0.2 vCPU        | 512 MB             | 1                 |
-| Up to 50 RPS      | 1 MB         | 0.5 vCPU        | 1 GB               | 1                 |
-| Up to 100 RPS     | Up to 100 KB | 0.2 vCPU        | 512 MB             | 1                 |
-| Up to 100 RPS     | 250 KB       | 0.5 vCPU        | 1 GB               | 1                 |
-| Up to 100 RPS     | 1 MB         | 1.0 vCPU        | 1 GB               | 1                 |
-| 101–200 RPS       | Up to 250 KB | 0.5 vCPU        | 1 GB               | 1                 |
-| 101–200 RPS       | 1 MB         | Not achievable  | —                  | —                 |
-| 201–500 RPS       | Up to 10 KB  | 0.5 vCPU        | 1 GB               | 1                 |
-| 201–500 RPS       | 50 KB        | 1.0 vCPU        | 1 GB               | 1                 |
-| 201–500 RPS       | 100 KB       | 1.0 vCPU        | 1 GB               | 1                 |
-| 201–500 RPS       | 250 KB+      | Not achievable  | —                  | —                 |
-| 501–1000 RPS      | Up to 10 KB  | 0.5 vCPU        | 1 GB               | 1                 |
-| 501–1000 RPS      | 50 KB        | 1.0 vCPU        | 1 GB               | 1                 |
-| 501–1000 RPS      | 100 KB+      | Not achievable  | —                  | —                 |
-| 1001–2000 RPS     | 1 KB         | 0.5 vCPU        | 1 GB               | 1                 |
-| 1001–2000 RPS     | 10–50 KB     | 0.5 vCPU        | 1 GB               | 1                 |
-| 1001–2000 RPS     | 100 KB+      | Not achievable  | —                  | —                 |
-| 2001–5000 RPS     | 1 KB         | 0.5 vCPU        | 1 GB               | 1                 |
-| 2001–5000 RPS     | 10 KB+       | Not achievable  | —                  | —                 |
+| :---- | :---- | :---- | :---- | :---- |
+| Up to 50 RPS | Up to 250 KB | 0.2 vCPU | 512 MB | 1 |
+| Up to 50 RPS | 1 MB | 0.5 vCPU | 1 GB | 1 |
+| Up to 100 RPS | Up to 100 KB | 0.2 vCPU | 512 MB | 1 |
+| Up to 100 RPS | 250 KB | 0.5 vCPU | 1 GB | 1 |
+| Up to 100 RPS | 1 MB | 1.0 vCPU | 1 GB | 1 |
+| 101–200 RPS | Up to 250 KB | 0.5 vCPU | 1 GB | 1 |
+| 101–200 RPS | 1 MB | Not achievable | — | — |
+| 201–500 RPS | Up to 10 KB | 0.5 vCPU | 1 GB | 1 |
+| 201–500 RPS | 50 KB | 1.0 vCPU | 1 GB | 1 |
+| 201–500 RPS | 100 KB | 1.0 vCPU | 1 GB | 1 |
+| 201–500 RPS | 250 KB+ | Not achievable | — | — |
+| 501–1000 RPS | Up to 10 KB | 0.5 vCPU | 1 GB | 1 |
+| 501–1000 RPS | 50 KB | 1.0 vCPU | 1 GB | 1 |
+| 501–1000 RPS | 100 KB+ | Not achievable | — | — |
+| 1001–2000 RPS | 1 KB | 0.5 vCPU | 1 GB | 1 |
+| 1001–2000 RPS | 10 KB | 0.5 vCPU | 1 GB | 1 |
+| 1001–2000 RPS | 50 KB | 1.0 vCPU | 1 GB | 1 |
+| 1001–2000 RPS | 100 KB+ | Not achievable | — | — |
+| 2001–5000 RPS | 1 KB | 0.5 vCPU | 1 GB | 1 |
+| 2001–5000 RPS | 10 KB+ | Not achievable | — | — |
 
 > **"Not achievable"** means this throughput cannot be reached for the given payload size regardless of resource allocation, due to network latency constraints.
 
@@ -111,15 +135,16 @@ Select the row that best matches your target throughput and payload size. All co
 
 The number of concurrent connections from your clients directly affects the throughput you can achieve. Use this table as a reference when sizing your client connection pools.
 
-| Target Throughput | Minimum Concurrent Connections             |
-| :---------------- | :----------------------------------------- |
-| Up to 100 RPS     | 10 (small payloads ≤ 100 KB)               |
-| 200 RPS           | 50                                         |
-| 500 RPS           | 50 (small payloads); 100 (medium payloads) |
-| 1000 RPS          | 100 (1 KB); 200 (10 KB)                    |
-| 2000 RPS          | 200 (1 KB); 500 (10–50 KB)                 |
-| 5000 RPS          | 500 (1 KB only)                            |
+| Target Throughput | Minimum Concurrent Connections |
+| ----- | ----- |
+| Up to 100 RPS | 10 (small payloads ≤ 100 KB) |
+| 200 RPS | 50 |
+| 500 RPS | 50 (small payloads); 100 (medium payloads) |
+| 1000 RPS | 100 (1 KB); 200 (10 KB) |
+| 2000 RPS | 200 (1 KB); 500 (10–50 KB) |
+| 5000 RPS | 500 (1 KB only) |
 
+> **Why do concurrent connections matter?** The achievable throughput depends on the number of concurrent connections your clients maintain. Too few connections create a bottleneck regardless of how many replicas are running since each request must wait for the previous one to complete.  
 ---
 
 ## Known Limitations
@@ -148,4 +173,4 @@ If your requirements fall outside the supported ranges in this guide, or if you 
 
 ---
 
-*This guide is based on internal performance testing of WSO2 Integrator: BI (Ballerina 2202.13.1) on WSO2 Integration Platform PDP. Results reflect an HTTP passthrough scenario with a single-region deployment.*
+*This guide is based on internal performance testing of WSO2 Integrator on WSO2 Integration Platform PDP. Results reflect an HTTP passthrough scenario with a single-region deployment.*
